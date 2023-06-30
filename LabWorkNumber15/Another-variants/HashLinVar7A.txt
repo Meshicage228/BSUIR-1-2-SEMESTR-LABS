@@ -1,0 +1,112 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX_NAME 100
+#define SIZE_TABLE 10
+typedef struct person {
+    int num;
+    char name[MAX_NAME];
+    int index;
+};
+person* push_table[SIZE_TABLE];
+unsigned int hashing(int a) {
+    int hash_value = 0;
+    hash_value = a % SIZE_TABLE;
+    return hash_value;
+}
+void init_hash_table() {
+    for (int i = 0; i < SIZE_TABLE; i++)
+    {
+        push_table[i] = NULL;
+    }
+}
+void print_table() {
+    cout << "Start of hash table : \n";
+    for (int i = 0; i < SIZE_TABLE; i++)
+    {
+        if (push_table[i] == NULL)
+        {
+            cout << i << " -----------\n";
+        }
+        else
+        {
+            cout << i << " " << push_table[i]->num << endl;
+        }
+    }
+    cout << "End : \n ";
+}
+void hash_table_instert(person* p) {
+    int index = hashing(p->num);
+    bool flag = true;
+    if (push_table[index] == NULL) {
+        push_table[index] = p;
+        p->index = index;
+    }
+    else
+    {
+        do {
+            while (index != SIZE_TABLE - 1) {
+                if (push_table[index] == NULL)
+                {
+                    push_table[index] = p;
+                    p->index = index;
+                    flag = false;
+                    break;
+                }
+                index++;
+            }
+            index = 0;
+        } while (flag);
+       
+    }
+}
+int search_for_person(int a) {
+    int index = hashing(a);
+    bool flag = true;
+    int tries = 0;
+    do {
+            while (index != SIZE_TABLE - 1) {
+                if (push_table[index] == NULL)
+                {
+                    index++;
+                    continue;
+                }
+                if (push_table[index]->num == a)
+                {
+                    return index; flag = false; break;
+                }
+                index++;
+            }
+            index = 0;
+            tries++;
+            if (tries == 2) break;
+    } while (flag);
+    if (flag) cout << "We didnt found this number...\n";
+    return -1;
+}
+void hesh_delete_point(int a) {
+    if (search_for_person(a) == -1) cout << "We cannot delete impossible number\n";
+    else
+    {
+        int index = search_for_person(a);
+        push_table[index] = NULL;
+    }
+}
+int main()
+{
+    init_hash_table();
+    person arr[8];
+    cout << "Array : \n";
+    for (int i = 0; i < 8; i++)
+    {   
+        arr[i].num = rand() % 3601 + 3200;
+        cout << i << " ---- " << arr[i].num << endl;
+        hash_table_instert(&arr[i]); 
+    }
+    print_table();
+    if (search_for_person(4493) == -1) cout << "This num doesnt exist"; else cout << "We found num " << push_table[search_for_person(4493)]->num << " at pos - " << search_for_person(4493) << endl;
+    hesh_delete_point(4493);
+    print_table();
+    search_for_person(4493);
+    return 0;
+}

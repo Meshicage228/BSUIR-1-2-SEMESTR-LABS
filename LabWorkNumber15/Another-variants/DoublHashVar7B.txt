@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX_NAME 100
+#define SIZE_TABLE 10
+typedef struct person {
+    char dest[40];
+    char time[40];
+    int num;
+};
+person* push_table[SIZE_TABLE];
+unsigned int hashing(int a) {
+    return a % SIZE_TABLE;
+}
+unsigned int hashing2(int a) {
+    return 7 - a % 7;
+}
+void init_hash_table() {
+    for (int i = 0; i < SIZE_TABLE; i++) {
+        push_table[i] = NULL;
+    }
+}
+void print_table() {
+    cout << "Start of hash table : \n";
+    for (int i = 0; i < SIZE_TABLE; i++) {
+        if (push_table[i] == NULL) {
+            cout << i << " -----------\n";
+        }
+        else {
+            cout << i << " " << push_table[i]->num << endl;
+        }
+    }
+    cout << "End : \n ";
+}
+void hash_table_instert(person* p) {
+    int index = hashing(p->num);
+    if (push_table[index] == NULL) {
+        push_table[index] = p;
+    }
+    else {
+        int j = 0;
+        int new_index = (hashing(p->num) + j * hashing2(p->num)) % SIZE_TABLE;
+        while (push_table[new_index] != NULL) {
+            j++;
+            new_index = (hashing(p->num) + j * hashing2(p->num)) % SIZE_TABLE;
+        }
+        push_table[new_index] = p;
+    }
+}
+void show_info(int index) {
+    cout << push_table[index]->dest << " " << push_table[index]->time << " " << push_table[index]->num;
+}
+void search_for_info(int num) {
+    int index = hashing(num);
+    if (push_table[index]->num == num) {
+        show_info(index);
+    }
+    else {
+        int j = 0;
+        int new_index = ((num) + j * hashing2(num)) % SIZE_TABLE;
+        while (push_table[new_index] != NULL && push_table[new_index]->num != num && j!=num) {
+            j++;
+            new_index = (hashing(num) + j * hashing2(num)) % SIZE_TABLE;
+        }
+        if (push_table[new_index] == NULL) cout << "Num is not detected\n";
+        else show_info(new_index);
+
+    }
+}
+int main()
+{
+    init_hash_table();
+    person arr[8] = {
+        {"Brest" , "18:30" ,2342},
+        {"Minsk" , "16:00" ,9262},
+        {"Grondo" , "5:00" ,1005},
+        {"Mogilew" , "6:00" ,6534},
+        {"Vitebsk" , "18:10" ,7845},
+        {"Brest" , "12:34" ,1230},
+        {"Minsk" , "11:45" ,2238},
+        {"Minsk" , "15:04" ,9949}
+    };
+    for (int i = 0; i < 8; i++) {
+        cout << "Destination : " << arr[i].dest << "; time - " << arr[i].time << "; code : " << arr[i].num << endl;
+    }cout << endl;
+    for (int i = 0; i < 8; i++)
+    {
+        hash_table_instert(&arr[i]);
+    }
+    print_table();
+    cout << "Write num : ";
+    int num;
+    cin >> num;
+    search_for_info(num);
+    return 0;
+}

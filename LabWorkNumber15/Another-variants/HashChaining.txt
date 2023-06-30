@@ -1,0 +1,169 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX_NAME 100
+#define SIZE_TABLE 10
+typedef struct person {
+    int age;
+    char name[MAX_NAME];
+    person* next;
+} ;
+person* push_table[SIZE_TABLE];
+unsigned int hashing(const char* name) {
+   int length =  strlen(name);
+   int hash_value = 0;
+   for (int i = 0; i < length; i++)
+   {
+       hash_value += name[i];
+       hash_value = (hash_value * name[i]) % SIZE_TABLE;
+   }
+    return hash_value;
+}
+void init_hash_table() {
+    for (int i = 0; i < SIZE_TABLE; i++)
+    {
+        push_table[i] = NULL;
+   
+    }
+}
+void print_table() {
+    cout << "Start : \n";
+    for (int i = 0; i < SIZE_TABLE; i++)
+    {
+        if (push_table[i] == NULL)
+        {
+            cout << i << " -----------\n";
+        }
+        else
+        {
+            if(push_table[i]->next == NULL)
+            cout << i << " " << push_table[i]->name << endl;
+            else {
+              
+                person* ptr = push_table[i];
+                cout << i << " ";
+                while (ptr)
+                {
+                    cout << ptr->name << " ";
+                    ptr = ptr->next;
+                }
+                cout << endl;
+            }
+        }
+    }
+    cout << "End : \n ";
+}
+void hash_table_instert(person* p) {
+    p->next = NULL;
+    /*if (p == NULL) return false;*/
+    int index = hashing(p->name);
+
+    if (push_table[index] != NULL)
+    {
+        if (push_table[index]->next == NULL)
+        {
+            cout << "pip";
+            push_table[index]->next = p;
+        }
+        else
+        {
+            cout << "op";
+            person* ptr = push_table[index];
+            while (ptr)
+            {
+                if (ptr->next == NULL) break;
+                ptr = ptr->next;
+            }
+            ptr->next = p;
+        }
+    }
+    else
+    {
+        push_table[index] = p;
+       /* return true;*/
+    }
+}
+person* search_for_person(const char* name) {
+    int index = hashing(name);
+    if (push_table[index] != NULL && !strcmp(push_table[index]->name , name))
+    {
+        return push_table[index];
+    }
+    else
+    {
+        return NULL;
+    }
+}
+void hesh_delete_point(const char* name) {
+    int index = hashing(name);
+    if (push_table[index] != NULL)
+    {
+        cout << "piiiiiiiiiiiiiiiiiiip" << endl;
+        if (push_table[index]->next == NULL) {
+            push_table[index] = NULL;
+        }
+        else {
+            cout << "pip" << endl;
+            if (!strcmp(push_table[index]->name, name)) {
+                push_table[index] = push_table[index]->next;
+                
+            }
+            else
+            {
+                cout << " AAAAAAAAAAAAAAAAAAAAAAAA " << endl;
+                person* ptr = push_table[index];
+                while (ptr)
+                {
+                    if (!strcmp(ptr->next->name, name))
+                    {
+                        person* delptr = ptr->next;
+                        ptr->next = ptr->next->next;
+                        delptr = NULL;
+                        break;
+                    }
+                    else
+                    {
+                        ptr = ptr->next;
+                    }
+                }
+            }
+        }
+       /* return ptr;*/
+    }
+}
+int main()
+{
+    init_hash_table();
+    print_table();
+    person Jacob = { 12, "Jackob" };
+    person Vlad = { 18, "Vlad" };
+    person Zhenya = { 19, "Zhenya" };
+    person Zhenya2 = { 19, "Zhenay" };
+    person Gleb1 = { 23, "Glevichob" };
+    person text = { 23, "Grtrtr" };
+    person Gleb2 = { 232345, "Glebovich" };
+    person Gleb3 = { 243, "vichGlebov" };
+    person Misha = { 11, "Misha" };
+    hash_table_instert(&Jacob);
+    hash_table_instert(&Vlad);
+    hash_table_instert(&Zhenya);
+    hash_table_instert(&Zhenya2);
+    hash_table_instert(&Gleb1);
+    hash_table_instert(&text);
+    hash_table_instert(&Gleb2);
+    hash_table_instert(&Gleb3);
+    hash_table_instert(&Misha);
+    print_table();
+    person* Name = search_for_person("Vlad");
+ 
+    hesh_delete_point(Vlad.name);
+
+    print_table();
+   /* cout << "Jackob - " << hashing("Jackob") << endl;
+    cout << "Yana - " << hashing("Yana") << endl;
+    cout << "Vlad - " << hashing("Vlad") << endl;
+    cout << "Gleb - " << hashing("Gleb") << endl;
+    cout << "Ulyana - " << hashing("Ulyana") << endl;
+    cout << "Georgy - " << hashing("Georgy") << endl;*/
+    return 0;
+}

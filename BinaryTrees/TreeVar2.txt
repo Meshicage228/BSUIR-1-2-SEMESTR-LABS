@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+struct box {
+    double num;
+    box* left_child;
+    box* right_child;
+};
+box* Inicialization(int x) {
+    box* ptr = new box();
+    ptr->num = x;
+    ptr->left_child = NULL;
+    ptr->right_child = NULL;
+    return ptr;
+}
+box* PushElement(box* root, int x) {
+    if (root == NULL) return Inicialization(x);
+    else if (x > root->num) root->right_child = PushElement(root->right_child, x);
+    else root->left_child = PushElement(root->left_child, x);
+    return root;
+}
+box* find(box* root, int x) {
+    if (root == NULL || x == root->num) return root;
+    else if (x > root->num) return find(root->right_child, x);
+    else return find(root->left_child, x);
+    return root;
+}
+box* find_min(box* root) {
+    if (root == NULL) return NULL;
+    else if (root->left_child != NULL) return find_min(root->left_child);
+    return root;
+}
+int counter = 0;
+void show_tree(box* root) {
+    if (root != NULL)
+    {
+ 
+        show_tree(root->left_child);
+        cout << root->num << " ";
+
+        show_tree(root->right_child);
+        if (root->left_child == NULL && root->right_child == NULL) counter++;
+    }
+}
+box* DeleteElement(box* root, int num) {
+    if (root == NULL) return NULL;
+     if (num > root->num) root->right_child = DeleteElement(root->right_child, num);
+    else if(num < root->num) root->left_child = DeleteElement(root->left_child, num);
+    else
+     {
+         if (root->left_child == NULL && root->right_child == NULL)
+         {
+             free(root);
+             return NULL;
+         }
+         else if (root->left_child == NULL || root->right_child == NULL) {
+             box* ptr;
+             if (root->left_child == NULL) {
+                 ptr = root->right_child;
+                 free(root);
+                 return ptr;
+             }
+             else
+             {
+                 ptr = root->left_child;
+                 free(root);
+                 return ptr;
+             }
+         }
+         else
+         {
+             box* ptrmin = find_min(root->right_child);
+             root->num = ptrmin->num;
+             root->right_child = DeleteElement(root->right_child, ptrmin->num);
+         }
+     }
+     return root;
+}
+int main()
+{
+
+    box* root;
+    root = Inicialization(9);
+    PushElement(root, 7);
+    PushElement(root, 8);
+    PushElement(root, 50);
+    PushElement(root, 11);
+    PushElement(root, 10);
+    PushElement(root, 13);
+    PushElement(root, 12);
+    PushElement(root, 15);
+    PushElement(root, 14);
+    PushElement(root, 17);
+    PushElement(root, 16);
+    show_tree(root); cout << endl;
+    cout << counter << " - leaves " << endl;
+    return 0;
+}

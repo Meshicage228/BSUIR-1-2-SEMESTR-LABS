@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+struct steck {
+    float number;
+    steck* next;
+};
+void Creataion(steck** top, float num) {
+    steck* chisl;
+    chisl = new steck();
+    chisl->number = num;
+    if (*top == NULL) {
+        *top = chisl;
+    }
+    else {
+        chisl->next = *top;
+        *top = chisl;
+    }
+}
+void show_stack(steck* top) {
+    steck* begin = top;
+    if (!begin) {
+        cout << "Стек пуст\n";
+    }
+    else {
+        while (begin != NULL) {
+            cout << begin->number << endl;
+            begin = begin->next;
+        }
+    }
+    cout << endl;
+}
+void find_next_copy(steck* top) {
+    steck* ptr = top;
+    bool flag = true;
+    while (ptr->next)
+    {
+        if (ptr->number == ptr->next->number) {
+            flag = false;
+            cout << ptr->number << " sled element is - " << ptr->next->number << endl;
+        }
+        ptr = ptr->next;
+    }
+    if (flag) cout << "Didnt find nums! \n";
+}
+float sum_of_elements(steck* top) {
+    steck* ptr = top; float sum = 0;
+    while (ptr)
+    {
+        if (ptr->number - round(ptr->number) != 0) {
+            sum += ptr->number;
+        }
+        ptr = ptr->next;
+    }
+    if (sum == 0) return 1;
+    else return sum;
+}
+int main() {
+    setlocale(0, "rus");
+    srand(time(NULL));
+    steck* mainstack = NULL;
+    int menu;
+    do {
+        cout << "1. Задание1\n2. Задание2\n3.Выход\n";
+        cin >> menu;
+        switch (menu)
+        {
+        default: cout << "Wrong number !";
+        case 0: return 0; break;
+        case 1: {
+            for (int i = 0; i < 6; i++) {
+                float a; cin >> a;
+                Creataion(&mainstack, a);
+            }
+            cout << "\nStack : \n";
+            show_stack(mainstack);
+            float a = sum_of_elements(mainstack);
+            if (a == 1) cout << "No nums detected\n";
+            else cout << "Sum is - " << a << endl;
+            
+        }break;
+        case 2: {
+            if (mainstack == NULL) {
+                cout << "Write stack before using that case!\n";
+                break;
+            }
+            else
+            {
+                find_next_copy(mainstack);
+            }
+        } break;
+        case 3: return 0;
+        }
+    } while (menu != 3);
+}

@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+struct steck {
+    float number;
+    steck* next;
+};
+void Creation(steck** top, float number) {
+    steck* ptr = new steck();
+    ptr->number = number;
+    if (top == NULL) {
+        *top = ptr;
+    }
+    else {
+        ptr->next = *top;
+        *top = ptr;
+    }
+}
+void Show(steck* top) {
+    steck* ptr = top;
+    while (ptr) {
+        cout << ptr->number << endl;
+        ptr = ptr->next;
+    }
+}
+void delete_negative_num(steck** top, steck* ptrmin) {
+    steck* ptr = ptrmin;
+    steck* move = *top;
+    if (ptr->number < 0 && ptr == *top) {
+        *top = (*top)->next;
+        delete ptr;
+    }
+    else {
+        while (move->next != ptr) {
+            move = move->next;
+        }
+        move->next = ptrmin->next;
+        ptrmin->next = NULL;
+        delete[] ptrmin;
+    }
+}
+bool FindOtriz(steck** top) {
+    steck* ptr = *top;
+    bool flag = false;
+    while (ptr) {
+        if (ptr->number < 0) {
+            flag = true;
+            break;
+        }
+        ptr = ptr->next;
+    }
+    if (flag) {
+        delete_negative_num(top, ptr);
+        return true;
+    }
+    else return false;
+}
+float SumOfFloats(steck* top) {
+    steck* ptr = top;
+    float sum = 0;
+    while (ptr)
+    {
+        if (ptr->number - round(ptr->number) != 0) {
+            sum += ptr->number;
+        }
+        ptr = ptr->next;
+    }
+    return sum;
+}
+int main()
+{
+    setlocale(0, "rus");
+    srand(time(NULL));
+    steck* Mystack = NULL;
+    Creation(&Mystack, 12.5);
+    for (int i = 0; i < 10; i++) {
+        int a = rand() % 60 - 10;
+        cout << a << endl;
+        Creation(&Mystack, a);
+    }
+    Creation(&Mystack, 5.6);
+    Creation(&Mystack, 34.62);
+    cout << "Stack : " << endl;
+    Show(Mystack);
+    cout << "Sum of float elements is " << SumOfFloats(Mystack) << endl;
+    if (FindOtriz(&Mystack)) {
+        cout << "res of delete " << endl;
+        Show(Mystack);
+    }
+    else cout << "No otriz found! " << endl;
+    return 0;
+}

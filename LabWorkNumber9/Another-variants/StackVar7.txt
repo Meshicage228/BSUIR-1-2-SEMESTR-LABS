@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+struct steck {
+    int num;
+    steck* next;
+};
+void Creation(steck** top, int number) {
+    steck* ptr = new steck();
+    ptr ->num = number;
+    if (top == NULL) {
+        *top = ptr;
+    }
+    else {
+        ptr->next = *top;
+        *top = ptr;
+    }
+}
+int SearchMax(steck* top) {
+    steck* maxel = top;
+    steck* q = maxel->next;
+    int counter = 0;
+    while (q) {
+        if (maxel->num <= q->num) {
+            maxel = q;
+        }
+        q = q->next;
+    }
+    cout << "Max element at this stack is " << maxel->num;
+    steck* max = top;
+    while (1) {
+        if (max == maxel) {
+            break;
+        }
+        counter++;
+        max = max->next;
+    }
+    return counter;
+}
+void Show(steck* top) {
+    steck* ptr = top;
+    while (ptr) {
+        cout << ptr->num << endl;
+        ptr = ptr->next;
+    }
+}
+void DeleteStack(steck* top) {
+    steck* ptr =top;
+    while (ptr) {
+            top = ptr->next;
+            free(ptr);
+            ptr->next = NULL;
+            ptr->num = NULL;
+            ptr = ptr->next;
+    }
+}
+int main() {
+    steck* top = NULL;
+    srand(time(NULL));
+    for (int i = 0; i < 20; i++) {
+        int a = rand() % 101 - 50;
+        Creation(&top, a);
+    }
+    Show(top);
+    cout << "This is how much numbers are near that num ---" << SearchMax(top) << endl;
+    DeleteStack(top);
+    cout << "Stack after delete : \n";
+    Show(top);
+    return 0;
+}

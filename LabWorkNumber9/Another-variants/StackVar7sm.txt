@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+int main() {
+    srand(time(NULL));
+    stack <int> Mystack;
+    stack <int> Mystackcopy;
+    int counter = 0;
+    int size;
+    cout << " size : ";
+    cin >> size;
+    do
+    {
+        int a = rand() %101 - 50;
+        Mystack.push(a);
+        counter++;
+    } while (counter != size);
+    int max = Mystack.top();
+    while (!Mystack.empty())
+    {
+        Mystackcopy.push(Mystack.top());
+        if (max <= Mystack.top())
+        {
+            max = Mystack.top();
+        }
+        Mystack.pop();
+    }
+    Zapis(Mystackcopy, Mystack);
+    int count = 0;
+    cout << "Max is " << max << endl;
+    while (Mystackcopy.top() != max)
+    {
+        count++;
+        Mystackcopy.pop();
+    }
+    cout << "Kol-vo : " << count;
+    return 0;
+}

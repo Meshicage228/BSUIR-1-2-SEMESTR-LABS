@@ -1,0 +1,88 @@
+struct steck {
+    int number;
+    steck* next;
+};
+void Creataion(steck** top, int num) {
+    steck* chisl;
+    chisl = new steck();
+    chisl->number = num;
+    if (*top == NULL)
+    {
+        *top = chisl;
+    }
+    else
+    {
+        chisl->next = *top;
+        *top = chisl;
+    }
+}
+void DeleteSTack(steck*top) {
+    steck* ptr = top;
+    while (ptr)
+    {   
+        top = ptr->next;
+        free(ptr);
+        ptr->next = NULL;
+        ptr->number = NULL;
+        ptr = ptr->next;
+    }
+}
+void Raspr(steck* glavn, steck** pol, steck** otriz) {
+    steck* ptr = glavn;
+
+    while (ptr) {
+        if (ptr->number >= 0) {
+            Creataion(pol, ptr->number);
+        }
+        else {
+            Creataion(otriz, ptr->number);
+        }
+        ptr = ptr->next;
+    }
+
+}
+void show(steck* top) {
+    steck* begin = top;
+    if (!begin) {
+        cout << "Stack is empty!\n";
+    }
+    else {
+        while (begin != NULL) {
+            cout << begin->number << endl;
+            begin = begin->next;
+        }
+    }
+}
+int main() {
+    steck* firststeck = NULL;
+    steck* polsteck = NULL;
+    steck* otrizsteck = NULL;
+    int num;
+    cin >> num;
+    int chisl;
+    for (int i = 0; i < num; i++) {
+        cin >> chisl;
+        Creataion(&firststeck, chisl);
+    }
+    cout << "Main is N1 \n";
+    show(firststeck);
+    Raspr(firststeck, &polsteck, &otrizsteck);
+    cout << "Pol Stack : \n";
+    show(polsteck);
+    cout << "Otriz Stack : \n";
+    show(otrizsteck);
+    cout << endl;
+    cout << "Main is N1 \n";
+    show(firststeck);
+    DeleteSTack(firststeck);
+    cout << "Main is N1 \n";
+    show(firststeck);
+    DeleteSTack(polsteck);
+    cout << "Pol Stack : \n";
+    show(polsteck);
+    DeleteSTack(otrizsteck);
+    cout << "Otriz Stack : \n";
+    show(polsteck);
+
+    return 0;
+}

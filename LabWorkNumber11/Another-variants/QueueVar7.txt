@@ -1,0 +1,146 @@
+#include <iostream>
+struct box
+{
+    int num;
+    box* next;
+};
+struct control
+{
+    int count;
+    int size;
+    box* front;
+    box* rear;
+};
+int Empty(control* ptr) {
+    return (ptr->rear == NULL);
+}
+void inicialisation(control* ptr) {
+    ptr->count = 0;
+    ptr->front = NULL;
+    ptr->rear =  NULL;
+}
+void AddElement(control* st, int num) {
+    if (st->count <= st->size)
+    {
+        box* ptr = new box();
+        ptr->num = num;
+        ptr->next = NULL;
+        if (!Empty(st))
+        {
+            st->rear->next = ptr;
+            st->rear = ptr;
+        }
+        else
+        {
+            st->front = st->rear = ptr;
+        }
+        st->count++;
+    }
+    else
+    {
+        cout << "You  cant add element! " << endl;
+    }
+}
+void DeleteQueue(control* que) {
+    int count = 0;
+    while (count != que->size) {
+        box* ptr = que->front;
+        que->front = que->front->next;
+        que->count--;
+        free(ptr);
+        count++;
+    }
+}
+void ShowQueue(box* que) {
+    if (que == NULL)
+    {
+        cout << "End..\n";
+    }
+    else
+    {
+        cout << que->num << endl;
+        ShowQueue(que = que->next);
+    }
+}
+box* FindMinPol(box* que, int size) {
+    int counter = 0;
+    box* min = NULL;
+    while (counter != size) {
+        box* ptr = que;
+        if (ptr->num > 0) {
+            min = ptr;
+            break;
+        }
+        else {
+            que = que->next;
+        }
+        counter++;
+    }
+    while (counter != size)
+    {
+        box* ptrnext = que;
+        if (min->num > ptrnext->num && ptrnext->num > 0 && min->num > 0)
+        {
+            min = ptrnext;
+        }
+        que= que->next;
+        counter++;
+    }
+    return min;
+}
+box* FindMaxOtriz(box* que, int size) {
+    int counter = 0;
+    box* max = NULL;
+    while (counter != size) {
+        box* ptr = que;
+        if (ptr->num < 0) {
+            max = ptr;
+            break;
+        }
+        else {
+            que = que->next;
+        }
+        counter++;
+    }
+    while (counter != size) {
+        box* ptrnext = que;
+        if (max->num < ptrnext->num && ptrnext->num < 0 && max->num < 0) {
+            max = ptrnext;
+        }
+        que = que->next;
+        counter++;
+    }
+    return max;
+}
+void print(box* ptr) {
+    cout << ptr->num << endl;
+}
+void SwapElements(box* min, box* max) {
+    swap(min->num, max->num);
+}
+int main()
+{
+    control* que = new control();
+    srand(time(NULL));
+    inicialisation(que);
+    cout << "Size is - ";
+    int size;
+    cin >> size;
+    que->size = size;
+    for (int i = 0; i < size; i++)
+    {
+        int num = rand() % 101 - 50;
+        AddElement(que, num);
+    }
+    ShowQueue(que->front);
+    cout << " min from pol is - ";
+    print(FindMinPol(que->front, que->size));
+    cout << "max from otriz is - ";
+    print(FindMaxOtriz(que->front, que->size));
+    cout << "Result: \n";
+    SwapElements(FindMinPol(que->front, que->size), FindMaxOtriz(que->front, que->size));
+    ShowQueue(que->front);
+    DeleteQueue(que);
+    ShowQueue(que->front);
+    return 0;
+}

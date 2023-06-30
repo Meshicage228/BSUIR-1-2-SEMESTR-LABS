@@ -1,0 +1,93 @@
+#include <iostream>
+struct box
+{
+    int data;
+    box* next;
+};
+struct controle
+{
+    int count;
+    box* front;
+    box* rear;
+};
+
+void inici(controle* q) {
+    q->count = 0;
+    q->front = NULL;
+    q->rear = NULL;
+}
+int empty(controle* q) {
+    return (q->count == NULL);
+}
+void addqueue(controle* q, int num) {
+    if (q->count < FULL)
+    {
+        box* ptr = new box();
+        ptr->data = num;
+        ptr->next = NULL;
+        if (!empty(q))
+        {
+            q->rear->next = ptr;
+            q->rear = ptr;
+        }
+        else
+        {
+            q->front = q->rear = ptr;
+        }
+        q->count++;
+    }
+}
+void delqueue(controle* q) {
+        box* ptr = q->front;
+        q->front = q->front->next;
+        free(ptr);
+}
+void show(box* q) {
+    if (q == NULL)
+    {
+        cout << "Konez..\n";
+    }
+    else
+    {
+        cout << q->data << endl;
+        show(q = q->next);
+    }
+}
+void search(controle* qptr, controle* copy) {
+    int counter = 0;
+    while (counter != qptr->count) {
+        box* ptr = qptr->front;
+        if ((ptr->data % 2))
+        {
+            addqueue(copy, ptr->data);
+            delqueue(qptr);
+        }
+        else
+        {
+            delqueue(qptr);
+        }
+        counter++;
+    };
+}
+
+int main()
+{
+  
+    controle* que = new controle();
+    controle* quechet = new controle();
+    inici(que);
+    inici(quechet);
+    addqueue(que, 13);
+    addqueue(que, 15);
+    addqueue(que, 16);
+    addqueue(que, 17);
+    addqueue(que, 1324);
+    cout << "Main que : ";
+    show(que->front);
+    search(que, quechet);
+    cout << "Nechet que" << endl;
+    show(quechet->front); cout << endl;
+    cout << "Main que : ";
+    show(que->front);
+    return 0;
+}

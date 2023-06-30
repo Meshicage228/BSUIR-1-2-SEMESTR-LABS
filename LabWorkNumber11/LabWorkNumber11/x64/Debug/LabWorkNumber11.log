@@ -1,0 +1,4 @@
+﻿  Source.cpp
+D:\VisualProjects\LabWorkNumber11\LabWorkNumber11\Source.cpp(111,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\VisualProjects\LabWorkNumber11\LabWorkNumber11\Source.cpp(107): warning C4715: 'count_even_num2': not all control paths return a value
+  LabWorkNumber11.vcxproj -> D:\VisualProjects\LabWorkNumber11\x64\Debug\LabWorkNumber11.exe

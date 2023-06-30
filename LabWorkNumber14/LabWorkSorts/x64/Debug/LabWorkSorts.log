@@ -1,0 +1,3 @@
+﻿  LabWorkSorts.cpp
+D:\VisualProjects\LabWorkSorts\LabWorkSorts\LabWorkSorts.cpp(109,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  LabWorkSorts.vcxproj -> D:\VisualProjects\LabWorkSorts\x64\Debug\LabWorkSorts.exe

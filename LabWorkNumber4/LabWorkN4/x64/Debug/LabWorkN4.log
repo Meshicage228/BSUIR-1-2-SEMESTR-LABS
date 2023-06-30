@@ -1,0 +1,3 @@
+﻿  LabWorkN4.cpp
+D:\БГУИР\ОАИП\LabWorkNumber4\LabWorkN4\LabWorkN4.cpp(78,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  LabWorkN4.vcxproj -> D:\БГУИР\ОАИП\LabWorkNumber4\x64\Debug\LabWorkN4.exe

@@ -1,0 +1,10 @@
+﻿  LabWorkNumber2.cpp
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(76,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(76,20): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(80,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(80,20): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(84,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(84,20): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(93,29): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+E:\ОАИП\LabWorkNumber2\LabWorkNumber2\LabWorkNumber2.cpp(93,21): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  LabWorkNumber2.vcxproj -> E:\ОАИП\LabWorkNumber2\x64\Debug\LabWorkNumber2.exe

@@ -1,0 +1,95 @@
+﻿#include <iostream>
+using namespace std;
+struct box {
+    int data;
+    box* next;
+    bool priority;
+};
+struct controle {
+    int count;
+    int size;
+    box* front;
+    box* rear;
+};
+void inici(controle* q) {
+    q->count = 0;
+    q->front = NULL;
+    q->rear = NULL;
+}
+int empty(controle* q) {
+    return (q->count == NULL);
+}
+void addqueue(controle* q, int num) {
+    if (q->count < q->size) {
+        box* ptr = new box();
+        ptr->data = num;
+        ptr->next = NULL;
+        ptr->priority = false;
+        if (!empty(q)) {
+            q->rear->next = ptr;
+            q->rear = ptr;
+        }
+        else {
+            q->front = q->rear = ptr;
+        }
+        q->count++;
+    }
+    else cout << "Вы не можете добавить " << num << " Очередь полна\n";
+}
+void show(box* q) {
+    box* ptr = q;
+    while (ptr) {
+        cout << ptr->data << endl;
+        ptr = ptr->next;
+    }
+}
+int count_even_num(controle* que) {
+    box* ptr = que->front;
+    int counter = 0;
+    while (ptr) {
+        if (ptr->data % 2 == 0) counter++;
+        ptr = ptr->next;
+    }
+    return counter;
+}
+void show_priority(controle* que) {
+    for (int i = 0; i < que->size; i++) {
+        box* ptr = que->front;
+        if (ptr->priority) {
+            while (ptr->priority && ptr) {
+                ptr = ptr->next;
+            }
+        }
+        box* findmin = ptr;
+        while (findmin)
+        {
+            if (ptr->data >= findmin->data && findmin->priority == 0) {
+                ptr = findmin;
+            }
+            findmin = findmin->next;
+        }
+        ptr->priority = true;
+        cout << ptr->data << endl;
+    }
+}
+int main()
+{
+    setlocale(0, "rus");
+    srand(time(NULL));
+    controle* que = new controle();
+    inici(que);
+    int num;
+    cout << "Кол-во элементов очереди : ";
+    cin >> num; que->size = num;
+    for (int i = 0; i < num; i++) {
+        int chisl = rand() % 100 - 30;
+        addqueue(que, chisl);
+    }
+    cout << "Сгенерированная очередь : \n";
+    show(que->front);
+    cout << "Кол-во четных элементов : " << count_even_num(que) << endl;
+    cout << endl;
+    cout << "Приоритетная очередь (по минимальному числу) : \n";
+    show_priority(que);
+    return 0;
+}

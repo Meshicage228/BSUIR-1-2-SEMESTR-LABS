@@ -1,0 +1,9 @@
+﻿  main.c
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(6,5): warning C4013: 'SetConsoleCP' undefined; assuming extern returning int
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(7,5): warning C4013: 'SetConsoleOutputCP' undefined; assuming extern returning int
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(10,5): warning C4013: 'gets' undefined; assuming extern returning int
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(40,19): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(88,17): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(56,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\VisualProjects\LabWorkNumber10\LabWorkNumber10\main.c(78,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  LabWorkNumber10.vcxproj -> D:\VisualProjects\LabWorkNumber10\x64\Debug\LabWorkNumber10.exe
